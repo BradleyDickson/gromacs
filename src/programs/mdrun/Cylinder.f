@@ -1,5 +1,5 @@
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-! BMD 2015/20016 fABMACS
+! BMD PWD 2015/20016 fABMACS
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       subroutine hellof(istep,xx,ff)
       implicit integer*4 (i-n)
@@ -7,7 +7,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       real*4 bigd(BMAX,BMAX)
       real*8 dpop(2,BMAX,BMAX),pop(BMAX,BMAX)
       real*8 dela(3,BMAX,BMAX),ddela(BMAX,BMAX)
-      real*8 decon(BMAX,BMAX)
+      real*8 decon(BMAX,BMAX), widths(3)
       real*8 x0(NPARTS*3),ocog(3) !aly
       real*8 xwrp(NPARTS*3)       !for wrapping it
       real*8 alp,bee,cee,width,dih,DelT
@@ -18,6 +18,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       save !and save the stuff
 
       real ff(NPARTS*3),xx(NPARTS*3)
+      real*8 widths24(3), widths2(3)
       real*8 jaco(2,NPARTS*3),cog(3) !with ALY      !aly
       real*8 deid(3,4),qa(12)!for dihedral restraint
       real*8 ave1(2),freest
@@ -72,7 +73,7 @@ c         enddo
          read(11,*) bee !b parameter in mABP
          read(11,*) cee !c parameter in mABP (is taken as c*dt)
          read(11,*) alp !a/dx in S_a
-         read(11,*) width !box width, must be cubic 
+         read(11,*) (widths(j),j=1,3) ! rectangular
          read(11,*) radius !sphere or cylinder restraint radius
          read(11,*) scal !power for shape
          read(11,*) irest !restart or not
@@ -154,10 +155,13 @@ c         alp2 = alp*alp !save the alpha^2
          endif
          xwrp=xx
       endif                     !end the initial stuff
-!do basic PBC here with a cubic box, careful to hardcode the box
+!do basic PBC here with a rectangular box, careful to hardcode the box
 
-      width2=width*width
-      width24=width2/4d0
+      do k=1,3
+         widths2(k)=widths(k)*widths(k)
+         widths24(k)=widths2(k)/4d0
+      enddo
+
       do l=1,1
       do i=1,np
          do j=i,i
@@ -166,11 +170,11 @@ c         alp2 = alp*alp !save the alpha^2
                   xxj=xwrp(j*3-(3-k))
                   dr=xxi-xxj
                   dr2=dr*dr                  
-                  if(dr2.gt.width24)then !somebody need unwrappin, just roll j
+                  if(dr2.gt.widths24(k))then !somebody need unwrappin, just roll j
                      if(dr.gt.0d0)then
-                        xx(i*3-(3-k))=xx(i*3-(3-k))-width                        
+                        xx(i*3-(3-k))=xx(i*3-(3-k))-widths(k)                        
                      elseif(dr.lt.0d0)then
-                        xx(i*3-(3-k))=xx(i*3-(3-k))+width                        
+                        xx(i*3-(3-k))=xx(i*3-(3-k))+widths(k)                        
                      endif
 c                     if((dr+width)*(dr+width).lt.width24)then
 c                        xx(j*3-(3-k))=xx(j*3-(3-k))-width

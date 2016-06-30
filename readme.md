@@ -94,7 +94,7 @@ Go run simulations! Be sure that you point to the fABMACS executable. Use SPHERE
 3. An xyz file of the atoms in the CVs is output, named "fort.81." This file can be used to check that the periodic boundaries are treated correctly.
 
 # Requirements
-1. ***Cubic simulation cell*** Right now, simulation cells must be cubic. This simplifies the treatment of PBCs. We will release a generalization to rectangular cells soon. If the atoms in your CV will never cross the cell boundary, then your cell can have any shape.
+1. ***Simulation cell*** Currently only cubic, tetragonal and orthorhombic systems are supported (angles = 90 degrees). At this time we do not plan to implement irregular systems. 
 
 2. ***RMSD CVs*** Right now, RMSD is supported so a number of applications should be possible. We will release a distance based CV set soon.
 
