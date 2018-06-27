@@ -24,6 +24,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       real*8 orml,sumd,at1,at2,bang,arg
 
       if(istep.eq.0)then
+         nbin=300 !number of bins in phi psi
          open(11,file='./reffreeE') !reference free energy
          do k=1,nbin
             do l=1,nbin
@@ -50,7 +51,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
          bah2 = 1d0
          bah3=0d0
 
-         nbin = 300 !number of bins in phi-psi
+        
 
          open(11,file='params.in') !user inputs
          read(11,*) bolt!kelvin
