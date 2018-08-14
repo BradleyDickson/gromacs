@@ -1,0 +1,21 @@
+You are finished patching.
+Your params.in file should specify:
+system temp in KELVIN
+bias parameter b
+bias parameter c
+hill width "a" AS NUMBER OF BINS
+YOUR-BOX-EDGE in nanometers
+Cylinder or Sphere radius in nanometers
+value of p
+restart status: 0=not a restart, 1=restart
+-/|\-/|\-/|\-/|\-/|\-/|\-/|\-/|\
+An working example of params.in is:
+300.0 #
+0.9
+0.1
+10.0
+7.0265 7.0265 7.0265
+1.3
+20.0
+0
+You patched with options:  240 6 3 3 3 2.5 HYPER

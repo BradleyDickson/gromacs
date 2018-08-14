@@ -1,0 +1,7 @@
+The input params.in, Reference, sphpoints, equilibrated protein (isob.gro) and topology (topol.top) are deposited here.
+
+The PATCH.LOG file is also here, to report how fABMACS was initially patched. The "list" file is supplied.
+
+After patching, the md.c and hello.f files found here should replace the native fABMACS ones to allow reproduction of our simulations.
+
+qrates is the PBS script used to collect reactions.

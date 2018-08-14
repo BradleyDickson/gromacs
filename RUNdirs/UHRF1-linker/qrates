@@ -1,0 +1,23 @@
+#!/bin/bash
+#PBS -N 52-2
+#PBS -j oe 
+#PBS -l nodes=2:ppn=40
+#PBS -l walltime=380:00:00
+cd $PBS_O_WORKDIR
+
+list=`cat $PBS_NODEFILE|uniq`;for item in $list; do echo 10.152.220.$((`echo $item |sed -e 's/node//g;s/^0*//g'` +20));done >nodes
+
+#turn off recycling, it is off right?
+
+x=1;
+while [ $x -lt 21 ] ; do
+~/ProJectS/CleanBIN/bin/grompp_mpi -f md.mdp -c isob.gro -p topol.top -o run.tpr
+echo $x > trajnum
+mpirun -f nodes -np 72 ./mdrun -deffnm run
+t=`cat fort.87`
+echo $x $t >> alltimes
+mv run.xtc $x.xtc
+x=`echo $x+1|bc`
+rm \#*
+
+done
