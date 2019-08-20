@@ -21,12 +21,6 @@ We figure you are in a UNIX environment.
 
 Lastly, distance units are in nanometers, as per GROMACS.
 
-### To-do list:
-- [x] Implement rectangular systems
-- [ ] Implement distance CVs (partially done)
-- [ ] Modular patching script (with mixed CV type support)
-- [ ] Port to GROMACS 2016 release
-
 **Rectangular simulation cells are now supported.**
 -the "width" variable in params.in now **requires** three (3) "widths" 
 -the input now must be "widthx widthy widthz" as reflected in the [RUNdirs] inputs
